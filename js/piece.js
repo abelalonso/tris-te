@@ -1,14 +1,14 @@
 function Piece(game) {
   var shapes = [
-    [[" ", " ", " "], [" ", 0, " "], [0, 0, 0]],
-    [[" ", 1, " ", " "], [" ", 1, " ", " "], [" ", 1, " ", " "], [" ", 1, " ", " "]],
-    [[2, " ", " "], [2, " ", " "], [2, 2, " "]],
-    [[" ", " ", 3], [" ", " ", 3], [" ", 3, 3]],
-    [[" ", " ", " "], [4, 4, " "], [" ", 4, 4]],
-    [[" ", " ", " "], [" ", 5, 5], [5, 5, " "]],
-    [[6, 6], [6, 6]]
+    [[0, 0, 0], [0, 1, 0], [1, 1, 1]],
+    [[0, 2, 0, 0], [0, 2, 0, 0], [0, 2, 0, 0], [0, 2, 0, 0]],
+    [[3, 0, 0], [3, 0, 0], [3, 3, 0]],
+    [[0, 0, 4], [0, 0, 4], [0, 4, 4]],
+    [[0, 0, 0], [5, 5, 0], [0, 5, 5]],
+    [[0, 0, 0], [0, 6, 6], [6, 6, 0]],
+    [[7, 7], [7, 7]]
   ];
-  this.colors = [
+  this.colors = [,
     "rgb(102, 0, 204)",
     "rgb(0, 255, 255)",
     "rgb(255, 153, 0)",
@@ -34,9 +34,9 @@ Piece.prototype.calculateBorders = function (){
     console.log(matrix);
     return matrix.map(function (e){
       if (matrix.length<4){
-        return e.indexOf(matrix[1].filter(function (e2){return e2!=" "})[0]);
+        return e.indexOf(matrix[1].filter(function (e2){return e2!=0})[0]);
       } else {
-        return e.indexOf(1);
+        return e.indexOf(2);
       }
     });
   };
@@ -92,7 +92,7 @@ Piece.prototype.rotate = function() {
 Piece.prototype.draw = function() {
   this.shape.forEach(function(row, rowIndex) {
     row.forEach(function(e, colIndex) {
-      if (e != " ") {
+      if (e != 0) {
         this.drawSquare(
           this.x + this.squareWidth * colIndex,
           this.y + this.squareWidth * rowIndex,
@@ -106,7 +106,11 @@ Piece.prototype.draw = function() {
 
 Piece.prototype.drawSquare = function(x, y, width, height) {
   this.game.ctx.save();
-  this.game.ctx.fillStyle = this.colors[this.shape[1].filter(function (e){return e!=""})[0]];
+  if (this.shape.length<4){
+    this.game.ctx.fillStyle = this.colors[this.shape[1].filter(function (e){return e!=0})[0]];
+  } else {
+    this.game.ctx.fillStyle = this.colors[2];
+  }
   this.game.ctx.fillRect(x, y, width, height);
   this.game.ctx.restore();
 };
