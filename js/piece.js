@@ -85,22 +85,22 @@ Piece.prototype.rotate = function() {
   this.shape = this.transformMatrix(this.shape);
   while (this.x + this.borderLeft.min * this.squareWidth<0){
     this.moveRight();
-    this.distanceFromEdge = 0;
+//    this.distanceFromEdge = 0;
   }
   //Checks if the piece is out of bounds from the right when turning
   while ((this.x + 
         (this.shape.length - 
         (this.borderLeft.min)) * 
         this.squareWidth) >  this.game.canvas.width){
-    this.distanceFromEdge = 10 - this.shape.length;
+//    this.distanceFromEdge = 10 - this.shape.length;
     this.moveLeft();
   }
-/*   if ((Math.min.apply(null, this.borderLeft.filter(function (e){return e != -1}))) > (Math.min.apply(null, this.bordeTop.filter(function (e){return e != -1})) == 0)){
-    this.distanceFromEdge-=((Math.min.apply(null, this.borderLeft.filter(function (e){return e != -1}))) - (Math.min.apply(null, this.bordeTop.filter(function (e){return e != -1})) == 0));
+   if (this.borderLeft.min > this.borderTop.min){
+    this.distanceFromEdge+=(this.borderLeft.min+this.borderTop.min);
   }
-  if ((Math.min.apply(null, this.borderLeft.filter(function (e){return e != -1}))) <   (Math.min.apply(null, this.borderTop.filter(function (e){return e != -1})))){
-    this.distanceFromEdge+=((Math.min.apply(null, this.borderTop.filter(function (e){return e != -1})))-(Math.min.apply(null, this.borderLeft.filter(function (e){return e != -1}))));
-  } */
+  if (this.borderLeft.min < this.borderTop.min){
+    this.distanceFromEdge-=(this.borderTop.min+this.borderLeft.min);
+  }
 };
 //Draws the piece
 Piece.prototype.draw = function() {
