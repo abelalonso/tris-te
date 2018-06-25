@@ -29,9 +29,9 @@ function Piece(game) {
   this.setListeners();
   this.calculateBorders();
 }
+//Calculates the borders of each piece
 Piece.prototype.calculateBorders = function (){
   getBorder = function(matrix){
-    console.log(matrix);
     return matrix.map(function (e){
       if (matrix.length<4){
         return e.indexOf(matrix[1].filter(function (e2){return e2!=0})[0]);
@@ -52,20 +52,14 @@ Piece.prototype.calculateBorders = function (){
   // border Bottom
   matrix = this.transformMatrix(matrix);
   this.borderTop = getBorder(matrix);
-
-  console.log("BorderBottom: "+this.borderBottom);
-  console.log("BorderLeft: "+this.borderLeft);
-  console.log("BorderTop: "+this.borderTop);
-  console.log("BorderRight: "+this.borderRight);
 }
-
+//turns a matrix to right
 Piece.prototype.transformMatrix = function(matrix){
   var result = matrix.map(function(row) {
     return row.map(function(e) {
       return 0;
     });
   });
-
   matrix.forEach(function(row, rowIndex) {
     row.forEach(function(e, colIndex) {
       result[colIndex][row.length - 1 - rowIndex] = e;
@@ -73,22 +67,28 @@ Piece.prototype.transformMatrix = function(matrix){
   });
   return result;
 }
+//Rotate the piece
 Piece.prototype.rotate = function() {
   var aux = this.borderTop;
   this.borderTop = this.borderLeft;
   this.borderLeft = this.borderBottom;
   this.borderBottom = this.borderRight;
   this.borderRight = aux;
-
- 
+  //Checks if the piece is out of bounds from the left when turning
   this.shape = this.transformMatrix(this.shape);
-  console.log();
-  console.log("BorderBottom: "+this.borderBottom);
-  console.log("BorderLeft: "+this.borderLeft);
-  console.log("BorderTop: "+this.borderTop);
-  console.log("BorderRight: "+this.borderRight);
+  while (this.x + Math.min.apply(null, this.borderLeft.filter(function (e){return e!=-1})) * this.squareWidth<0){
+    this.moveRight();
+  }
+  //Checks if the piece is out of bounds from the right when turning
+  while ((this.x + 
+        (this.shape.length - 
+        (Math.min.apply(null, this.borderLeft.filter(function (e){return e != -1})))) * 
+        this.squareWidth) >  this.game.canvas.width){
+    console.log("moving")
+    this.moveLeft();
+  }
 };
-
+//Draws the piece
 Piece.prototype.draw = function() {
   this.shape.forEach(function(row, rowIndex) {
     row.forEach(function(e, colIndex) {
@@ -103,7 +103,7 @@ Piece.prototype.draw = function() {
     }.bind(this));
   }.bind(this));
 };
-
+//Draws the little square
 Piece.prototype.drawSquare = function(x, y, width, height) {
   this.game.ctx.save();
   if (this.shape.length<4){
@@ -114,25 +114,25 @@ Piece.prototype.drawSquare = function(x, y, width, height) {
   this.game.ctx.fillRect(x, y, width, height);
   this.game.ctx.restore();
 };
-
-Piece.prototype.moveRight = function() {
-  if (this.x+(this.shape.length*this.squareWidth)<this.game.canvas.width){
-    this.x+=this.squareWidth;
-  }
-};
-
+//Moves the piece to the left
 Piece.prototype.moveLeft = function() {
-  if(this.x>0){
-    this.x-=this.squareWidth;
+  if(this.x + Math.min.apply(null, this.borderLeft.filter(function (e){return e != -1})) * this.squareWidth > 0){
+    this.x -= this.squareWidth;
   }
 };
-
+//Moves the piece to the right
+Piece.prototype.moveRight = function() {
+  if (this.x + (this.shape.length * this.squareWidth) < this.game.canvas.width + Math.min.apply(null, this.borderRight.filter(function (e){return e != -1})) * this.squareWidth > 0){
+    this.x += this.squareWidth;
+  }
+};
+//Moves the piece down
 Piece.prototype.moveDown = function() {
   if((this.y+(this.shape.length*this.squareWidth))<this.game.canvas.height){
     this.y+=this.game.speed;
   }
 }
-
+//Set the listeners for every key
 Piece.prototype.setListeners = function() {
   document.onkeydown = function(e) {
     switch (e.keyCode) {
