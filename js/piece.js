@@ -84,7 +84,6 @@ Piece.prototype.rotate = function() {
         (this.shape.length - 
         (Math.min.apply(null, this.borderLeft.filter(function (e){return e != -1})))) * 
         this.squareWidth) >  this.game.canvas.width){
-    console.log("moving")
     this.moveLeft();
   }
 };
@@ -122,7 +121,7 @@ Piece.prototype.moveLeft = function() {
 };
 //Moves the piece to the right
 Piece.prototype.moveRight = function() {
-  if (this.x + (this.shape.length * this.squareWidth) < this.game.canvas.width + Math.min.apply(null, this.borderRight.filter(function (e){return e != -1})) * this.squareWidth > 0){
+  if (this.x + (this.shape.length * this.squareWidth) - Math.min.apply(null, this.borderRight.filter(function (e){return e != -1})) * this.squareWidth < this.game.canvas.width){
     this.x += this.squareWidth;
   }
 };
