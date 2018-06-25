@@ -18,29 +18,66 @@ function Piece(game) {
     "rgb(255, 255, 0)"
   ];
   this.game = game;
+
+  //phisycal properties
   this.index = parseInt(Math.random() * this.colors.length);
   this.shape = shapes[this.index];
   this.x = (this.game.canvas.width)/2;
   this.y = 50;
   this.squareWidth = 35;
 
-
   this.setListeners();
+  this.calculateBorders();
+}
+Piece.prototype.calculateBorders = function (){
+  getBorder = function(matrix){
+    console.log(matrix);
+    return matrix.map(function (e){
+      return e.indexOf(matrix[1].filter(function (e2){return e2!=" "})[0]);
+    });
+  };
+  //border Left
+  matrix = this.shape;
+  this.borderLeft = getBorder(matrix);
+  // border Top
+  matrix = this.transformMatrix(matrix);
+  this.borderBottom = getBorder(matrix);
+  // border Right
+  matrix = this.transformMatrix(matrix);
+  this.borderRight = getBorder(matrix);
+  // border Bottom
+  matrix = this.transformMatrix(matrix);
+  this.borderTop = getBorder(matrix);
+
+  console.log("BorderBottom: "+this.borderBottom);
+  console.log("BorderLeft: "+this.borderLeft);
+  console.log("BorderTop: "+this.borderTop);
+  console.log("BorderRight: "+this.borderRight);
 }
 
-Piece.prototype.rotate = function() {
-  var result = this.shape.map(function(row) {
+Piece.prototype.transformMatrix = function(matrix){
+  var result = matrix.map(function(row) {
     return row.map(function(e) {
       return 0;
     });
   });
 
-  this.shape.forEach(function(row, rowIndex) {
+  matrix.forEach(function(row, rowIndex) {
     row.forEach(function(e, colIndex) {
       result[colIndex][row.length - 1 - rowIndex] = e;
     });
   });
-  this.shape = result;
+  return result;
+}
+Piece.prototype.rotate = function() {
+  var aux = this.borderTop;
+  this.borderTop = this.borderLeft;
+  this.borderLeft = this.borderBottom;
+  this.borderBottom = this.borderRight;
+  this.borderRight = aux;
+
+ 
+  this.shape = this.transformMatrix(this.shape);
 };
 
 Piece.prototype.draw = function() {
