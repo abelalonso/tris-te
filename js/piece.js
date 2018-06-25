@@ -33,7 +33,11 @@ Piece.prototype.calculateBorders = function (){
   getBorder = function(matrix){
     console.log(matrix);
     return matrix.map(function (e){
-      return e.indexOf(matrix[1].filter(function (e2){return e2!=" "})[0]);
+      if (matrix.length<4){
+        return e.indexOf(matrix[1].filter(function (e2){return e2!=" "})[0]);
+      } else {
+        return e.indexOf(1);
+      }
     });
   };
   //border Left
@@ -78,6 +82,11 @@ Piece.prototype.rotate = function() {
 
  
   this.shape = this.transformMatrix(this.shape);
+  console.log();
+  console.log("BorderBottom: "+this.borderBottom);
+  console.log("BorderLeft: "+this.borderLeft);
+  console.log("BorderTop: "+this.borderTop);
+  console.log("BorderRight: "+this.borderRight);
 };
 
 Piece.prototype.draw = function() {
@@ -97,7 +106,7 @@ Piece.prototype.draw = function() {
 
 Piece.prototype.drawSquare = function(x, y, width, height) {
   this.game.ctx.save();
-  this.game.ctx.fillStyle = this.colors[this.shape[1].filter(function (e){return e!=" "})[0]];
+  this.game.ctx.fillStyle = this.colors[this.shape[1].filter(function (e){return e!=""})[0]];
   this.game.ctx.fillRect(x, y, width, height);
   this.game.ctx.restore();
 };
