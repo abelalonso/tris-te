@@ -2,7 +2,7 @@ function Game(canvasID) {
   this.canvas = document.getElementById(canvasID);
   this.ctx = this.canvas.getContext("2d");
   this.fps = 60;
-  this.speed = 1;
+  this.speed = 0.1;
 
   this.reset();
 }

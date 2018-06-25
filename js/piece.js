@@ -20,14 +20,16 @@ function Piece(game) {
   this.game = game;
 
   //phisycal properties
-  this.index = parseInt(Math.random() * this.colors.length);
+  this.index = parseInt(Math.random() * shapes.length);
   this.shape = shapes[this.index];
   this.x = (this.game.canvas.width)/2;
   this.y = 50;
   this.squareWidth = 35;
 
+
   this.setListeners();
   this.calculateBorders();
+  this.distanceFromEdge = 5 + this.borderLeft.min;
 }
 //Calculates the borders of each piece
 Piece.prototype.calculateBorders = function (){
@@ -41,17 +43,22 @@ Piece.prototype.calculateBorders = function (){
     });
   };
   //border Left
+  function borderObj(matrix) {
+    this.border = getBorder(matrix), 
+    this.min = Math.min.apply(null, this.border.filter(function (e){return e!=-1}))
+  };
   matrix = this.shape;
-  this.borderLeft = getBorder(matrix);
+  this.borderLeft = new borderObj(matrix)
+  console.log(this.borderLeft);
   // border Top
   matrix = this.transformMatrix(matrix);
-  this.borderBottom = getBorder(matrix);
+  this.borderBottom = new borderObj(matrix);
   // border Right
   matrix = this.transformMatrix(matrix);
-  this.borderRight = getBorder(matrix);
+  this.borderRight = new borderObj(matrix);
   // border Bottom
   matrix = this.transformMatrix(matrix);
-  this.borderTop = getBorder(matrix);
+  this.borderTop = new borderObj(matrix);
 }
 //turns a matrix to right
 Piece.prototype.transformMatrix = function(matrix){
@@ -76,16 +83,24 @@ Piece.prototype.rotate = function() {
   this.borderRight = aux;
   //Checks if the piece is out of bounds from the left when turning
   this.shape = this.transformMatrix(this.shape);
-  while (this.x + Math.min.apply(null, this.borderLeft.filter(function (e){return e!=-1})) * this.squareWidth<0){
+  while (this.x + this.borderLeft.min * this.squareWidth<0){
     this.moveRight();
+    this.distanceFromEdge = 0;
   }
   //Checks if the piece is out of bounds from the right when turning
   while ((this.x + 
         (this.shape.length - 
-        (Math.min.apply(null, this.borderLeft.filter(function (e){return e != -1})))) * 
+        (this.borderLeft.min)) * 
         this.squareWidth) >  this.game.canvas.width){
+    this.distanceFromEdge = 10 - this.shape.length;
     this.moveLeft();
   }
+/*   if ((Math.min.apply(null, this.borderLeft.filter(function (e){return e != -1}))) > (Math.min.apply(null, this.bordeTop.filter(function (e){return e != -1})) == 0)){
+    this.distanceFromEdge-=((Math.min.apply(null, this.borderLeft.filter(function (e){return e != -1}))) - (Math.min.apply(null, this.bordeTop.filter(function (e){return e != -1})) == 0));
+  }
+  if ((Math.min.apply(null, this.borderLeft.filter(function (e){return e != -1}))) <   (Math.min.apply(null, this.borderTop.filter(function (e){return e != -1})))){
+    this.distanceFromEdge+=((Math.min.apply(null, this.borderTop.filter(function (e){return e != -1})))-(Math.min.apply(null, this.borderLeft.filter(function (e){return e != -1}))));
+  } */
 };
 //Draws the piece
 Piece.prototype.draw = function() {
@@ -115,20 +130,23 @@ Piece.prototype.drawSquare = function(x, y, width, height) {
 };
 //Moves the piece to the left
 Piece.prototype.moveLeft = function() {
-  if(this.x + Math.min.apply(null, this.borderLeft.filter(function (e){return e != -1})) * this.squareWidth > 0){
+  if(this.x + this.borderLeft.min * this.squareWidth > 0){
     this.x -= this.squareWidth;
+    this.distanceFromEdge--;
   }
 };
 //Moves the piece to the right
 Piece.prototype.moveRight = function() {
-  if (this.x + (this.shape.length * this.squareWidth) - Math.min.apply(null, this.borderRight.filter(function (e){return e != -1})) * this.squareWidth < this.game.canvas.width){
+  if (this.x + (this.shape.length * this.squareWidth) - this.borderRight.min * this.squareWidth < this.game.canvas.width){
     this.x += this.squareWidth;
+    this.distanceFromEdge++;
   }
 };
 //Moves the piece down
 Piece.prototype.moveDown = function() {
   if((this.y+(this.shape.length*this.squareWidth))<this.game.canvas.height){
     this.y+=this.game.speed;
+    console.log(this.distanceFromEdge);
   }
 }
 //Set the listeners for every key
