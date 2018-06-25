@@ -1,14 +1,14 @@
 function Piece(game) {
   var shapes = [
-    [[0, 0, 0], [0, 1, 0], [1, 1, 1]],
-    [[0, 1, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0]],
-    [[1, 0, 0], [1, 0, 0], [1, 1, 0]],
-    [[0, 0, 1], [0, 0, 1], [0, 1, 1]],
-    [[0, 0, 0], [1, 1, 0], [0, 1, 1]],
-    [[0, 0, 0], [0, 1, 1], [1, 1, 0]],
-    [[1, 1], [1, 1]]
+    [[" ", " ", " "], [" ", 0, " "], [0, 0, 0]],
+    [[" ", 1, " ", " "], [" ", 1, " ", " "], [" ", 1, " ", " "], [" ", 1, " ", " "]],
+    [[2, " ", " "], [2, " ", " "], [2, 2, " "]],
+    [[" ", " ", 3], [" ", " ", 3], [" ", 3, 3]],
+    [[" ", " ", " "], [4, 4, " "], [" ", 4, 4]],
+    [[" ", " ", " "], [" ", 5, 5], [5, 5, " "]],
+    [[6, 6], [6, 6]]
   ];
-  var colors = [
+  this.colors = [
     "rgb(102, 0, 204)",
     "rgb(0, 255, 255)",
     "rgb(255, 153, 0)",
@@ -17,14 +17,14 @@ function Piece(game) {
     "rgb(255, 0, 0)",
     "rgb(255, 255, 0)"
   ];
-  this.index = parseInt(Math.random() * colors.length);
-  this.shape = shapes[this.index];
-  this.color = colors[this.index];
-  this.x = 50;
-  this.y = 50;
-  this.squareWidth = 20;
-
   this.game = game;
+  this.index = parseInt(Math.random() * this.colors.length);
+  this.shape = shapes[this.index];
+  this.x = (this.game.canvas.width)/2;
+  this.y = 50;
+  this.squareWidth = 35;
+
+
   this.setListeners();
 }
 
@@ -44,24 +44,23 @@ Piece.prototype.rotate = function() {
 };
 
 Piece.prototype.draw = function() {
-  that = this;
   this.shape.forEach(function(row, rowIndex) {
     row.forEach(function(e, colIndex) {
-      if (e == 1) {
-        that.drawSquare(
-          that.x + that.squareWidth * colIndex,
-          that.y + that.squareWidth * rowIndex,
-          that.squareWidth,
-          that.squareWidth
+      if (e != " ") {
+        this.drawSquare(
+          this.x + this.squareWidth * colIndex,
+          this.y + this.squareWidth * rowIndex,
+          this.squareWidth,
+          this.squareWidth
         );
       }
-    });
-  });
+    }.bind(this));
+  }.bind(this));
 };
 
 Piece.prototype.drawSquare = function(x, y, width, height) {
   this.game.ctx.save();
-  this.game.ctx.fillStyle = this.color;
+  this.game.ctx.fillStyle = this.colors[this.shape[1].filter(function (e){return e!=" "})[0]];
   this.game.ctx.fillRect(x, y, width, height);
   this.game.ctx.restore();
 };
@@ -77,6 +76,12 @@ Piece.prototype.moveLeft = function() {
     this.x-=this.squareWidth;
   }
 };
+
+Piece.prototype.moveDown = function() {
+  if((this.y+(this.shape.length*this.squareWidth))<this.game.canvas.height){
+    this.y+=this.game.speed;
+  }
+}
 
 Piece.prototype.setListeners = function() {
   document.onkeydown = function(e) {

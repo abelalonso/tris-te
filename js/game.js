@@ -1,6 +1,8 @@
 function Game(canvasID) {
   this.canvas = document.getElementById(canvasID);
   this.ctx = this.canvas.getContext("2d");
+  this.fps = 60;
+  this.speed = 1;
 
   this.reset();
 }
@@ -13,7 +15,9 @@ Game.prototype.draw = function() {
   this.piece.draw();
 };
 
-Game.prototype.moveAll = function() {};
+Game.prototype.moveAll = function() {
+  this.piece.moveDown();
+};
 
 Game.prototype.clear = function() {
   this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -23,14 +27,9 @@ Game.prototype.clear = function() {
 Game.prototype.start = function(){
     var lastTime = 0;
     this.clear();
-    update = function(time){
+    this.interval = setInterval(function(){
       this.clear();
-      var delta = time-lastTime;
-      lastTime = time;
-      this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height);
       this.draw();
-      this.moveAll(delta);
-      window.requestAnimationFrame(update);
-    }.bind(this);
-  window.requestAnimationFrame(update);
-}
+      this.moveAll();
+    }.bind(this), 1000/this.fps);
+};
