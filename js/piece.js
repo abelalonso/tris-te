@@ -49,7 +49,7 @@ Piece.prototype.calculateBorders = function (){
   };
   matrix = this.shape;
   this.borderLeft = new borderObj(matrix)
-  console.log(this.borderLeft);
+
   // border Top
   matrix = this.transformMatrix(matrix);
   this.borderBottom = new borderObj(matrix);
@@ -144,7 +144,7 @@ Piece.prototype.moveRight = function() {
 };
 //Moves the piece down
 Piece.prototype.moveDown = function() {
-  if((this.y+(this.shape.length*this.squareWidth))<this.game.canvas.height){
+  if((this.y+((this.shape.length-this.borderBottom.min)*this.squareWidth))<this.game.canvas.height-20){
     this.y+=this.game.speed;
     console.log(this.distanceFromEdge);
   }
@@ -161,6 +161,9 @@ Piece.prototype.setListeners = function() {
         break;
       case 39:
         this.moveRight();
+        break;
+      case 40:
+        this.game.speed=25;
         break;
     }
   }.bind(this);
