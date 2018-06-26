@@ -32,17 +32,16 @@ function Board(game) {
   this.skyLine = this.getSkyline();
 }
 
-
-
  Board.prototype.getSkyline = function(){
+   console.log(this.shape);
   matrix = this.transformMatrix(this.shape);
-  return matrix.map(function (row){
-    for (var i=row.lenght-1; i>=0; i--){
-      if (row[i]!=0){
-        return i;
-        console.log(i);
+  console.log(matrix);
+  return matrix.map(function(row) {
+    for (var i=row.length-1; i>=0; i--){
+      if (row[i] != 0){
+        return i+1;
       }
     }
     return 0;
-  })
+  });
 } 

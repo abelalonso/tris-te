@@ -11,12 +11,12 @@ function Game(canvasID) {
 Game.prototype.reset = function() {
   this.piece = new Piece(this);
   this.board = new Board(this);
+  console.log(this.board.skyLine);
 };
 
 Game.prototype.draw = function() {
   this.piece.draw();
   this.board.draw();
-  console.log(this.board.skyLine);
 };
 
 Game.prototype.moveAll = function() {
