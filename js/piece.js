@@ -129,7 +129,7 @@ Piece.prototype.draw = function() {
               this.x + this.squareWidth * colIndex,
               this.y + this.squareWidth * rowIndex,
               this.squareWidth,
-              this.squareWidth, 
+              this.squareWidth,
               e
             );
           }
@@ -139,12 +139,18 @@ Piece.prototype.draw = function() {
   );
 };
 
-Piece.prototype.clearPiece = function(){
-  this.game.ctx.clearRect(this.x, 
-                          this.y, 
-                          this.shape.length*this.squareWidth, 
-                          this.shape.length*this.squareWidth);
-  this.game.board.insertPiece(this.shape, this.distanceFromEdge, this.distanceFromBottom);
+Piece.prototype.clearPiece = function() {
+  this.game.ctx.clearRect(
+    this.x,
+    this.y,
+    this.shape.length * this.squareWidth,
+    this.shape.length * this.squareWidth
+  );
+  this.game.board.insertPiece(
+    this.shape,
+    this.distanceFromEdge,
+    this.distanceFromBottom
+  );
 };
 //Draws the little square
 Piece.prototype.drawSquare = function(x, y, width, height, colorIndex) {
@@ -174,16 +180,16 @@ Piece.prototype.moveRight = function() {
 };
 //Moves the piece down
 Piece.prototype.moveDown = function() {
-    if (
+  if (
     this.y + (this.shape.length - this.borderBottom.min) * this.squareWidth <
     this.game.canvas.height
   ) {
     this.y += this.game.speed;
-    if (this.y % this.squareWidth == 0) {
+    if ((this.y % this.squareWidth == 0) || ((this.y % this.squareWidth)+this.game.speed)>this.squareWidth) {
       --this.distanceFromBottom;
     }
     console.log(this.distanceFromEdge, this.distanceFromBottom);
-  } else{
+  } else {
     this.clearPiece();
   }
 };

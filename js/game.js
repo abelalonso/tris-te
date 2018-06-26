@@ -12,7 +12,7 @@ Game.prototype.reset = function() {
   this.frameCounter=0;
   this.piece = new Piece(this);
   this.board = new Board(this);
-  console.log(this.board.skyLine);
+
 };
 
 Game.prototype.draw = function() {
