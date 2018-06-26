@@ -144,7 +144,7 @@ Piece.prototype.clearPiece = function(){
                           this.y, 
                           this.shape.length*this.squareWidth, 
                           this.shape.length*this.squareWidth);
-
+  this.game.board.insertPiece(this.shape, this.distanceFromEdge, this.distanceFromBottom);
 };
 //Draws the little square
 Piece.prototype.drawSquare = function(x, y, width, height, colorIndex) {
@@ -181,6 +181,8 @@ Piece.prototype.moveDown = function() {
     this.y += this.game.speed;
     if (this.y % this.squareWidth == 0) {
       --this.distanceFromBottom;
+      console.log("entro");
+      console.log(this.game.frameCounter);
     }
     console.log(this.distanceFromEdge, this.distanceFromBottom);
   } else{
