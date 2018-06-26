@@ -174,15 +174,13 @@ Piece.prototype.moveRight = function() {
 };
 //Moves the piece down
 Piece.prototype.moveDown = function() {
-  if (
+    if (
     this.y + (this.shape.length - this.borderBottom.min) * this.squareWidth <
     this.game.canvas.height
   ) {
     this.y += this.game.speed;
     if (this.y % this.squareWidth == 0) {
       --this.distanceFromBottom;
-      console.log("entro");
-      console.log(this.game.frameCounter);
     }
     console.log(this.distanceFromEdge, this.distanceFromBottom);
   } else{

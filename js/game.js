@@ -2,7 +2,7 @@ function Game(canvasID) {
   this.canvas = document.getElementById(canvasID);
   this.ctx = this.canvas.getContext("2d");
   this.fps = 60;
-  this.speed = 0.35;
+  this.speed = 1;
 
   this.reset();
   this.setListeners();
@@ -28,16 +28,11 @@ Game.prototype.clear = function() {
   this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 };
 
-//start with requestAnimationFrame
+//start with setInterval
 Game.prototype.start = function(){
-    var lastTime = 0;
+
     this.clear();
     this.interval = setInterval(function(){
-      this.frameCounter++;
-/* 
-      if (this.framesCounter > 1000) {
-        this.framesCounter = 0;
-      } */
       this.clear();
       this.draw();
       this.moveAll();
@@ -58,8 +53,9 @@ Game.prototype.setListeners = function() {
         this.piece.moveRight();
         break;
       case 40:
-        this.speed = 35;
+        this.speed =34;
         break;
     }
   }.bind(this);
 };
+
