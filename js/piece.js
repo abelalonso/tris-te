@@ -20,6 +20,7 @@ function Piece(game) {
     "rgb(255, 255, 0)"
   ];
   this.game = game;
+  this.speed = this.game.speed;
 
   //phisycal properties
   this.index = parseInt(Math.random() * shapes.length);
@@ -138,7 +139,7 @@ Piece.prototype.draw = function() {
     }.bind(this)
   );
 };
-
+//Clears the piece from the canvas and inserts its values on the board
 Piece.prototype.clearPiece = function() {
   this.game.ctx.clearRect(
     this.x,
@@ -147,10 +148,11 @@ Piece.prototype.clearPiece = function() {
     this.shape.length * this.squareWidth
   );
   this.game.board.insertPiece(
-    this.shape,
+    this,
     this.distanceFromEdge,
-    this.distanceFromBottom
+    this.distanceFromBottom 
   );
+  this.game.piece = new Piece(this.game);
 };
 //Draws the little square
 Piece.prototype.drawSquare = function(x, y, width, height, colorIndex) {
@@ -184,11 +186,14 @@ Piece.prototype.moveDown = function() {
     this.y + (this.shape.length - this.borderBottom.min) * this.squareWidth <
     this.game.canvas.height
   ) {
-    this.y += this.game.speed;
-    if ((this.y % this.squareWidth == 0) || ((this.y % this.squareWidth)+this.game.speed)>this.squareWidth) {
+    this.y += this.speed;
+    if ((this.y % this.squareWidth == 0) || ((this.y % this.squareWidth)+this.speed)>this.squareWidth) {
       --this.distanceFromBottom;
+      //ñapa
+      if (this.distanceFromBottom <0){
+        this.distanceFromBottom = 0;
+      }
     }
-    console.log(this.distanceFromEdge, this.distanceFromBottom);
   } else {
     this.clearPiece();
   }

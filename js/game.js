@@ -36,6 +36,7 @@ Game.prototype.start = function(){
       this.clear();
       this.draw();
       this.moveAll();
+      this.checkColision();
     }.bind(this), 1000/this.fps);
 };
 
@@ -53,9 +54,18 @@ Game.prototype.setListeners = function() {
         this.piece.moveRight();
         break;
       case 40:
-        this.speed =34;
+        this.piece.speed = 25;
         break;
     }
   }.bind(this);
 };
 
+Game.prototype.checkColision = function(e) {
+/*   for (var i = 0; i < this.piece.shape.length; i++){
+
+    if (this.piece.borderBottom.border[i] == this.board.skyLine[i+this.piece.borderLeft.min]){
+      this.piece.clearPiece();
+    }
+  } */
+  console.log(this.piece.borderBottom.border[0], this.board.skyLine[0+this.piece.borderLeft.min]);
+}
