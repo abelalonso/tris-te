@@ -24,7 +24,7 @@ function Piece(game) {
 
   //phisycal properties
   this.index = parseInt(Math.random() * shapes.length);
-  this.shape = [[0, 0, 0], [0, 1, 0], [1, 1, 1]];
+  this.shape = shapes[this.index];
   this.x = this.game.canvas.width / 2;
   this.y = 0;
   this.squareWidth = 35;

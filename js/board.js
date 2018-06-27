@@ -21,10 +21,10 @@ function Board(game) {
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [2, 2, 0, 0, 0, 0, 0, 0, 0, 0],
-    [2, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [2, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [1, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
   ];
 
   this.x = 0;
@@ -55,6 +55,22 @@ Board.prototype.insertPiece = function(piece, x, y){
     }.bind(this));
   }.bind(this));
   this.draw();
-
   this.skyLine = this.getSkyline(this.shape);
+  this.clearLine();
 };
+
+Board.prototype.clearLine = function(){
+  var matrixAux=[];
+  for(var i= this.shape.length-1; i>=0; i--){
+    if (this.shape[i].filter(function(e){return e == 0}).length != 0){
+      matrixAux.unshift(this.shape[i]);
+    }
+  }
+  console.log(matrixAux.length)
+  for(var i=matrixAux.length; i<20; i++){
+    console.log("in")
+    matrixAux.unshift([0,0,0,0,0,0,0,0,0,0]);
+  }
+  this.shape = matrixAux
+}
+

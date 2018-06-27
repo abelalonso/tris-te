@@ -66,8 +66,6 @@ Game.prototype.checkColision = function(e) {
   isCollision = function(){
 
     for (var i=0; i<this.piece.borderBottom.border.filter(function(e){return e!=-1}).length; i++){
-
-console.log(this.piece.borderBottom.min);
       if (this.piece.distanceFromBottom+(this.piece.borderBottom.border[i]>0?this.piece.borderBottom.border[i]:0) == this.board.skyLine[i+this.piece.distanceFromLeft]+this.piece.borderBottom.min){
         return true;
       }
