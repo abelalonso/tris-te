@@ -187,14 +187,11 @@ Piece.prototype.moveDown = function() {
     this.game.canvas.height
   ) {
     this.y += 1;
-    if ((this.y % this.squareWidth == 0) /* || ((this.y % this.squareWidth)+this.speed)>this.squareWidth */) {
+    if ((this.y % this.squareWidth == 0)) {
       --this.distanceFromBottom;
-      //ñapa
-/*       if (this.distanceFromBottom <0){
-        this.distanceFromBottom = 0;
-      } */
     }
   } else {
     this.clearPiece();
   }
 };
+

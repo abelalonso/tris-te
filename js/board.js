@@ -43,6 +43,16 @@ function Board(game) {
   }
   return answer;
 };
+
+Board.prototype.clearBoard = function(){
+  this.shape.forEach(function(row, i){
+    row.forEach(function(e, j){
+      this.shape[i][j]=0;
+    }.bind(this));
+  }.bind(this));
+  return matrix;
+}
+
 //Inserts the values of a piece in the board
 Board.prototype.insertPiece = function(piece, x, y){
   y = this.shape.length-y-piece.shape.length + piece.borderBottom.min;
@@ -54,9 +64,9 @@ Board.prototype.insertPiece = function(piece, x, y){
       }
     }.bind(this));
   }.bind(this));
-  this.draw();
+/*   this.draw();
   this.clearLine();
-  this.skyLine = this.getSkyline(this.shape);
+  this.skyLine = this.getSkyline(this.shape); */
 };
 
 Board.prototype.clearLine = function(){

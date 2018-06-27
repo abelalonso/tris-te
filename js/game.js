@@ -12,12 +12,15 @@ Game.prototype.reset = function() {
   this.frameCounter=0;
   this.piece = new Piece(this);
   this.board = new Board(this);
+  //this.auxBoard = new Board(this);
 
 };
 
 Game.prototype.draw = function() {
   this.piece.draw();
   this.board.draw();
+  //this.auxBoard.clearBoard();
+  //this.auxBoard.insertPiece(this.piece, this.piece.distanceFromLeft, this.piece.distanceFromBottom);
 };
 
 Game.prototype.moveAll = function() {
@@ -37,7 +40,10 @@ Game.prototype.start = function(){
         this.clear();
         this.draw();
         this.moveAll();
-        this.checkColision();
+/*         var position = this.checkColision();
+        if (position.length>0){
+          this.piece.clearPiece(position)
+        } */
       }
     }.bind(this), 1000/(this.fps));
 };
@@ -62,16 +68,26 @@ Game.prototype.setListeners = function() {
   }.bind(this);
 };
 
-Game.prototype.checkColision = function(e) {
-  isCollision = function(){
-    var widthWithoutSpaces = this.piece.borderBottom.border.filter(function(e){return e!=-1}).length;
+Game.prototype.checkColision = function() {
+
+  for (var i=1; i<this.auxBoard.shape.length; i++){
+    this.auxBoard.shape[i].forEach(function (e, j){
+      if(this.auxBoard.shape[i-1][j]*this.board.shape[i][j]!=0){
+        console.log("colision");
+        return [x,y];
+      }
+    }.bind(this));
+  };
+  return [];
+}
+  /*     var widthWithoutSpaces = this.piece.borderBottom.border.filter(function(e){return e!=-1}).length;
     console.log(this.board.skyLine);
     console.log(this.piece.borderBottom.border);
     var aux = 0;
-/*     if((this.piece.shape.length<4) && (this.piece.borderBottom.border[0]==-1)){
+    if((this.piece.shape.length<4) && (this.piece.borderBottom.border[0]==-1)){
       aux++;
       console.log(aux)
-    } */
+    }
     for (var i=0; i<widthWithoutSpaces; i++){
         if (this.piece.distanceFromBottom+aux+(this.piece.borderBottom.border[i]>0?this.piece.borderBottom.border[i]:0) == this.board.skyLine[i+this.piece.distanceFromLeft]+this.piece.borderBottom.min-aux){
         return true;
@@ -79,7 +95,7 @@ Game.prototype.checkColision = function(e) {
     }
     return false;
   }.bind(this); 
-/* 
+
   isCollision2 = function(){
     var x = this.piece.distanceFromLeft;
     var y = this.board.shape.length-this.piece.distanceFromBottom-this.piece.shape.length+1;
@@ -95,8 +111,4 @@ Game.prototype.checkColision = function(e) {
     }.bind(this))
   }.bind(this)
    */
-  if (isCollision()){
-    this.piece.clearPiece();
-  } 
  
-};
