@@ -33,11 +33,13 @@ Game.prototype.start = function(){
 
     this.clear();
     this.interval = setInterval(function(){
-      this.clear();
-      this.draw();
-      this.moveAll();
-      this.checkColision();
-    }.bind(this), 1000/this.fps);
+      for (var i=0; i<this.piece.speed; i++){
+        this.clear();
+        this.draw();
+        this.moveAll();
+        this.checkColision();
+      }
+    }.bind(this), 1000/(this.fps));
 };
 
 //Set the listeners for every key
@@ -61,11 +63,10 @@ Game.prototype.setListeners = function() {
 };
 
 Game.prototype.checkColision = function(e) {
-/*   for (var i = 0; i < this.piece.shape.length; i++){
-
-    if (this.piece.borderBottom.border[i] == this.board.skyLine[i+this.piece.borderLeft.min]){
+    if (this.piece.distanceFromBottom+this.piece.borderBottom.border[i] == this.board.skyLine[i+this.piece.distanceFromLeft]){
       this.piece.clearPiece();
     }
-  } */
-  console.log(this.piece.borderBottom.border[0], this.board.skyLine[0+this.piece.borderLeft.min]);
+  var i=0;
+  console.log(this.piece.shape.length)
+  console.log(this.piece.distanceFromBottom+this.piece.borderBottom.border[i], this.board.skyLine[i+this.piece.distanceFromLeft]);
 }

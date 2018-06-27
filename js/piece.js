@@ -30,7 +30,7 @@ function Piece(game) {
   this.squareWidth = 35;
 
   this.calculateBorders();
-  this.distanceFromEdge = 5 + this.borderLeft.min;
+  this.distanceFromLeft = 5 + this.borderLeft.min;
   this.distanceFromBottom = 20 - this.shape.length - this.borderBottom.min;
 }
 //Calculates the borders of each piece
@@ -106,10 +106,10 @@ Piece.prototype.rotate = function() {
   }
   //recalculate the distance to the edge when rotating
   if (this.borderLeft.min > this.borderTop.min) {
-    this.distanceFromEdge += this.borderLeft.min + this.borderTop.min;
+    this.distanceFromLeft += this.borderLeft.min + this.borderTop.min;
   }
   if (this.borderLeft.min < this.borderTop.min) {
-    this.distanceFromEdge -= this.borderTop.min + this.borderLeft.min;
+    this.distanceFromLeft -= this.borderTop.min + this.borderLeft.min;
   }
   //recalculate the distance to the bottom when rotating
   if (this.borderBottom.min > this.borderLeft.min) {
@@ -149,7 +149,7 @@ Piece.prototype.clearPiece = function() {
   );
   this.game.board.insertPiece(
     this,
-    this.distanceFromEdge,
+    this.distanceFromLeft,
     this.distanceFromBottom 
   );
   this.game.piece = new Piece(this.game);
@@ -165,7 +165,7 @@ Piece.prototype.drawSquare = function(x, y, width, height, colorIndex) {
 Piece.prototype.moveLeft = function() {
   if (this.x + this.borderLeft.min * this.squareWidth > 0) {
     this.x -= this.squareWidth;
-    this.distanceFromEdge--;
+    this.distanceFromLeft--;
   }
 };
 //Moves the piece to the right
@@ -177,7 +177,7 @@ Piece.prototype.moveRight = function() {
     this.game.canvas.width
   ) {
     this.x += this.squareWidth;
-    this.distanceFromEdge++;
+    this.distanceFromLeft++;
   }
 };
 //Moves the piece down
@@ -186,13 +186,13 @@ Piece.prototype.moveDown = function() {
     this.y + (this.shape.length - this.borderBottom.min) * this.squareWidth <
     this.game.canvas.height
   ) {
-    this.y += this.speed;
-    if ((this.y % this.squareWidth == 0) || ((this.y % this.squareWidth)+this.speed)>this.squareWidth) {
+    this.y += 1;
+    if ((this.y % this.squareWidth == 0) /* || ((this.y % this.squareWidth)+this.speed)>this.squareWidth */) {
       --this.distanceFromBottom;
       //ñapa
-      if (this.distanceFromBottom <0){
+/*       if (this.distanceFromBottom <0){
         this.distanceFromBottom = 0;
-      }
+      } */
     }
   } else {
     this.clearPiece();
