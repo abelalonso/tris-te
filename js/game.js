@@ -64,13 +64,21 @@ Game.prototype.start = function(){
         this.draw();
         this.moveAll();
         if(this.checkCollision()){
-          
         }
       }
     }.bind(this), 1000/(this.fps));
 };
 
 Game.prototype.checkCollision = function() {
+  if ((this.piece.shape.length==4) && (this.piece.borderLeft.border[0]==-1) && this.piece.distanceFromBottom == 0){
+    console.log("Stick horizontal");
+    console.log("colision");
+    this.auxBoard.clearBoard();
+    this.piece.clearPiece();
+    this.piece = new Piece(this);
+    return true;
+  }
+  
   for (var i=1; i<this.auxBoard.shape.length; i++){
     this.auxBoard.shape[i].forEach(function (e, j){
       if(this.auxBoard.shape[i-1][j]*this.board.shape[i][j]!=0){

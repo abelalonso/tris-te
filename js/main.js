@@ -9,5 +9,4 @@ window.onload = function(){
         $("#stop").attr("id", "start");
         game.start();
     });
-
 };
