@@ -3,6 +3,8 @@ function Game(canvasID) {
   this.ctx = this.canvas.getContext("2d");
   this.fps = 60;
   this.speed = 1;
+  this.score = 0;
+  this.level = 1;
 
   this.reset();
   this.setListeners();
@@ -37,6 +39,8 @@ Game.prototype.setListeners = function() {
 
 Game.prototype.reset = function() {
   this.piece = new Piece(this);
+  this.nextPiece = new Piece(this);
+  this.nextPiece.speed=0;
   this.board = new Board(this);
   this.auxBoard = new Board(this);
 };
@@ -65,14 +69,13 @@ Game.prototype.start = function(){
         this.moveAll();
         if(this.checkCollision()){
         }
+        console.log(this.nextPiece.shape);
       }
     }.bind(this), 1000/(this.fps));
 };
 
 Game.prototype.checkCollision = function() {
   if ((this.piece.shape.length==4) && (this.piece.borderLeft.border[0]==-1) && this.piece.distanceFromBottom == 0){
-    console.log("Stick horizontal");
-    console.log("colision");
     this.auxBoard.clearBoard();
     this.piece.clearPiece();
     this.piece = new Piece(this);
@@ -82,13 +85,24 @@ Game.prototype.checkCollision = function() {
   for (var i=1; i<this.auxBoard.shape.length; i++){
     this.auxBoard.shape[i].forEach(function (e, j){
       if(this.auxBoard.shape[i-1][j]*this.board.shape[i][j]!=0){
-        console.log("colision");
         this.auxBoard.clearBoard();
         this.piece.clearPiece();
-        this.piece = new Piece(this);
+        this.piece = this.nextPiece;
+        this.piece.speed = this.speed;
+        this.nextPiece = new Piece(this);
         return true;
       }
     }.bind(this));
   };
   return false;
 };
+
+Game.prototype.updateData = function(){
+  this.score+=100;;
+  if (this.score % 1000 == 0){
+    this.level++;
+    this.speed++;
+    $("#level").text("Level: "+this.level);
+  }
+  $("#score").text("Score: "+this.score);
+}

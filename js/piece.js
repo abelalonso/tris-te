@@ -21,6 +21,7 @@ function Piece(game) {
   ];
   this.game = game;
   this.speed = this.game.speed;
+  this.lateralMove = false;
 
   //phisycal properties
   this.index = parseInt(Math.random() * shapes.length);
@@ -173,7 +174,7 @@ Piece.prototype.moveDown = function() {
     this.y + (this.shape.length - this.borderBottom.min) * this.squareWidth <
     this.game.canvas.height
   ) {
-    this.y += 1;
+    this.y += 0.5;
     if ((this.y % this.squareWidth == 0)) {
       --this.distanceFromBottom;
     }

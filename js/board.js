@@ -62,6 +62,7 @@ Board.prototype.clearLine = function(){
   }
   for(var i=matrixAux.length; i<20; i++){
     matrixAux.unshift([0,0,0,0,0,0,0,0,0,0]);
+    this.game.updateData();
   }
   this.shape = matrixAux
 }
