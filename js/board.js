@@ -55,8 +55,8 @@ Board.prototype.insertPiece = function(piece, x, y){
     }.bind(this));
   }.bind(this));
   this.draw();
-  this.skyLine = this.getSkyline(this.shape);
   this.clearLine();
+  this.skyLine = this.getSkyline(this.shape);
 };
 
 Board.prototype.clearLine = function(){
@@ -66,9 +66,7 @@ Board.prototype.clearLine = function(){
       matrixAux.unshift(this.shape[i]);
     }
   }
-  console.log(matrixAux.length)
   for(var i=matrixAux.length; i<20; i++){
-    console.log("in")
     matrixAux.unshift([0,0,0,0,0,0,0,0,0,0]);
   }
   this.shape = matrixAux

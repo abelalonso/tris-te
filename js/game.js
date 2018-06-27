@@ -64,28 +64,39 @@ Game.prototype.setListeners = function() {
 
 Game.prototype.checkColision = function(e) {
   isCollision = function(){
-
-    for (var i=0; i<this.piece.borderBottom.border.filter(function(e){return e!=-1}).length; i++){
-      if (this.piece.distanceFromBottom+(this.piece.borderBottom.border[i]>0?this.piece.borderBottom.border[i]:0) == this.board.skyLine[i+this.piece.distanceFromLeft]+this.piece.borderBottom.min){
+    var widthWithoutSpaces = this.piece.borderBottom.border.filter(function(e){return e!=-1}).length;
+    console.log(this.board.skyLine);
+    console.log(this.piece.borderBottom.border);
+    var aux = 0;
+/*     if((this.piece.shape.length<4) && (this.piece.borderBottom.border[0]==-1)){
+      aux++;
+      console.log(aux)
+    } */
+    for (var i=0; i<widthWithoutSpaces; i++){
+        if (this.piece.distanceFromBottom+aux+(this.piece.borderBottom.border[i]>0?this.piece.borderBottom.border[i]:0) == this.board.skyLine[i+this.piece.distanceFromLeft]+this.piece.borderBottom.min-aux){
         return true;
       }
     }
     return false;
   }.bind(this); 
-
+/* 
+  isCollision2 = function(){
+    var x = this.piece.distanceFromLeft;
+    var y = this.board.shape.length-this.piece.distanceFromBottom-this.piece.shape.length+1;
+    this.piece.shape.forEach(function(row, i){
+      row.forEach(function(e, j){
+        if ((e!=0) && (this.board.shape[j+y][i+x]) !=0){
+          console.log("collision");
+          console.log(this.board.shape[j+y][i+x])
+        }else{
+          console.log("ok");
+        }
+      }.bind(this))
+    }.bind(this))
+  }.bind(this)
+   */
   if (isCollision()){
     this.piece.clearPiece();
   } 
  
- 
-/*   console.log(this.piece.shape)
-  console.log(this.board.shape[this.piece.distanceFromBottom-this.piece.shape.length][this.piece.distanceFromLeft]);
-  
-  this.piece.shape.forEach(function(row, i){
-    row.forEach(function(e, j){
-      if ((this.board.shape[j+this.piece.distanceFromBottom-this.piece.shape.length][i+this.piece.distanceFromLeft]) !=0){
-        console.log("collision!!!!!!!!!");
-      }
-    }.bind(this));
-  }.bind(this)); */
 };
