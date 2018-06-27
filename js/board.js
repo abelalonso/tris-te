@@ -1,4 +1,3 @@
-
 Board.prototype = Object.create(Piece.prototype);
 Board.prototype.constructor = Board;
 
@@ -29,20 +28,7 @@ function Board(game) {
 
   this.x = 0;
   this.y = 0;
-  this.skyLine = this.getSkyline(this.shape);
 }
-//Gets the highest position occupied on every column
- Board.prototype.getSkyline = function(matrix) {
-  answer = [0,0,0,0,0,0,0,0,0,0]
-  for (var i = 0; i<matrix.length; i++){
-   for (j=0; j<matrix.length; j++){
-     if (matrix[i][j]!=0 && answer[j]<matrix.length-i){
-       answer[j]=matrix.length-i;
-     }
-   }
-  }
-  return answer;
-};
 
 Board.prototype.clearBoard = function(){
   this.shape.forEach(function(row, i){
@@ -64,9 +50,7 @@ Board.prototype.insertPiece = function(piece, x, y){
       }
     }.bind(this));
   }.bind(this));
-/*   this.draw();
   this.clearLine();
-  this.skyLine = this.getSkyline(this.shape); */
 };
 
 Board.prototype.clearLine = function(){
@@ -81,4 +65,3 @@ Board.prototype.clearLine = function(){
   }
   this.shape = matrixAux
 }
-

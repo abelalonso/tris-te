@@ -119,6 +119,7 @@ Piece.prototype.rotate = function() {
     this.distanceFromBottom -= this.borderLeft.min + this.borderBottom.min;
   }
 };
+
 //Draws the piece
 Piece.prototype.draw = function() {
   this.shape.forEach(
@@ -139,21 +140,7 @@ Piece.prototype.draw = function() {
     }.bind(this)
   );
 };
-//Clears the piece from the canvas and inserts its values on the board
-Piece.prototype.clearPiece = function(position) {
-  this.game.ctx.clearRect(
-    this.x,
-    this.y,
-    this.shape.length * this.squareWidth,
-    this.shape.length * this.squareWidth
-  );
-  this.game.board.insertPiece(
-    this,
-    this.distanceFromLeft,
-    this.distanceFromBottom 
-  );
-  this.game.piece = new Piece(this.game);
-};
+
 //Draws the little square
 Piece.prototype.drawSquare = function(x, y, width, height, colorIndex) {
   this.game.ctx.save();
@@ -190,8 +177,25 @@ Piece.prototype.moveDown = function() {
     if ((this.y % this.squareWidth == 0)) {
       --this.distanceFromBottom;
     }
+    this.game.auxBoard.clearBoard();
+    this.game.auxBoard.insertPiece(this, this.distanceFromLeft, this.distanceFromBottom);
   } else {
     this.clearPiece();
   }
 };
 
+//Clears the piece from the canvas and inserts its values on the board
+Piece.prototype.clearPiece = function() {
+  this.game.ctx.clearRect(
+    this.x,
+    this.y,
+    this.shape.length * this.squareWidth,
+    this.shape.length * this.squareWidth
+  );
+  this.game.board.insertPiece(
+    this,
+    this.distanceFromLeft,
+    this.distanceFromBottom 
+  );
+  this.game.board.draw();
+};

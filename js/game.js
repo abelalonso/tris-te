@@ -6,21 +6,45 @@ function Game(canvasID) {
 
   this.reset();
   this.setListeners();
+
+  this.keyboard = {
+    up: 38,
+    down: 40,
+    left: 37,
+    right: 39 
+  }
 }
 
+//Set the listeners for every key
+Game.prototype.setListeners = function() {
+  document.onkeydown = function(e) {
+    switch (e.keyCode) {
+      case this.keyboard.up:
+        this.piece.rotate();
+        break;
+      case this.keyboard.left:
+        this.piece.moveLeft();
+        break;
+      case this.keyboard.right:
+        this.piece.moveRight();
+        break;
+      case this.keyboard.down:
+        this.piece.speed = 25;
+        break;
+    }
+  }.bind(this);
+};
+
 Game.prototype.reset = function() {
-  this.frameCounter=0;
   this.piece = new Piece(this);
   this.board = new Board(this);
   this.auxBoard = new Board(this);
-
 };
+
 
 Game.prototype.draw = function() {
   this.piece.draw();
   this.board.draw();
-  this.auxBoard.clearBoard();
-  this.auxBoard.insertPiece(this.piece, this.piece.distanceFromLeft, this.piece.distanceFromBottom);
 };
 
 Game.prototype.moveAll = function() {
@@ -33,83 +57,30 @@ Game.prototype.clear = function() {
 
 //start with setInterval
 Game.prototype.start = function(){
-
     this.clear();
     this.interval = setInterval(function(){
       for (var i=0; i<this.piece.speed; i++){
         this.clear();
         this.draw();
         this.moveAll();
-        this.checkColision();
+        if(this.checkCollision()){
+          
+        }
       }
     }.bind(this), 1000/(this.fps));
 };
 
-//Set the listeners for every key
-Game.prototype.setListeners = function() {
-  document.onkeydown = function(e) {
-    switch (e.keyCode) {
-      case 38:
-        this.piece.rotate();
-        break;
-      case 37:
-        this.piece.moveLeft();
-        break;
-      case 39:
-        this.piece.moveRight();
-        break;
-      case 40:
-        this.piece.speed = 25;
-        break;
-    }
-  }.bind(this);
-};
-
-Game.prototype.checkColision = function() {
-  isCollision = function(){
-    for (var i=1; i<this.auxBoard.shape.length; i++){
-      this.auxBoard.shape[i].forEach(function (e, j){
-        if(this.auxBoard.shape[i-1][j]*this.board.shape[i][j]!=0){
-          console.log("colision");
-          return true;
-        }
-      }.bind(this));
-    };
-    return false;
-  }.bind(this);
-/*     var widthWithoutSpaces = this.piece.borderBottom.border.filter(function(e){return e!=-1}).length;
-    console.log(this.board.skyLine);
-    console.log(this.piece.borderBottom.border);
-    var aux = 0;
-    if((this.piece.shape.length<4) && (this.piece.borderBottom.border[0]==-1)){
-      aux++;
-      console.log(aux)
-    }
-    for (var i=0; i<widthWithoutSpaces; i++){
-        if (this.piece.distanceFromBottom+aux+(this.piece.borderBottom.border[i]>0?this.piece.borderBottom.border[i]:0) == this.board.skyLine[i+this.piece.distanceFromLeft]+this.piece.borderBottom.min-aux){
+Game.prototype.checkCollision = function() {
+  for (var i=1; i<this.auxBoard.shape.length; i++){
+    this.auxBoard.shape[i].forEach(function (e, j){
+      if(this.auxBoard.shape[i-1][j]*this.board.shape[i][j]!=0){
+        console.log("colision");
+        this.auxBoard.clearBoard();
+        this.piece.clearPiece();
+        this.piece = new Piece(this);
         return true;
       }
-    }
-    return false;
-  }.bind(this); 
-
-  isCollision2 = function(){
-    var x = this.piece.distanceFromLeft;
-    var y = this.board.shape.length-this.piece.distanceFromBottom-this.piece.shape.length+1;
-    this.piece.shape.forEach(function(row, i){
-      row.forEach(function(e, j){
-        if ((e!=0) && (this.board.shape[j+y][i+x]) !=0){
-          console.log("collision");
-          console.log(this.board.shape[j+y][i+x])
-        }else{
-          console.log("ok");
-        }
-      }.bind(this))
-    }.bind(this))
-  }.bind(this)
-   */
-  if (isCollision()){
-    this.piece.clearPiece();
-  } 
- 
+    }.bind(this));
+  };
+  return false;
 };
