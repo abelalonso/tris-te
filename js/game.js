@@ -12,15 +12,15 @@ Game.prototype.reset = function() {
   this.frameCounter=0;
   this.piece = new Piece(this);
   this.board = new Board(this);
-  //this.auxBoard = new Board(this);
+  this.auxBoard = new Board(this);
 
 };
 
 Game.prototype.draw = function() {
   this.piece.draw();
   this.board.draw();
-  //this.auxBoard.clearBoard();
-  //this.auxBoard.insertPiece(this.piece, this.piece.distanceFromLeft, this.piece.distanceFromBottom);
+  this.auxBoard.clearBoard();
+  this.auxBoard.insertPiece(this.piece, this.piece.distanceFromLeft, this.piece.distanceFromBottom);
 };
 
 Game.prototype.moveAll = function() {
@@ -40,10 +40,7 @@ Game.prototype.start = function(){
         this.clear();
         this.draw();
         this.moveAll();
-/*         var position = this.checkColision();
-        if (position.length>0){
-          this.piece.clearPiece(position)
-        } */
+        this.checkColision();
       }
     }.bind(this), 1000/(this.fps));
 };
@@ -69,18 +66,18 @@ Game.prototype.setListeners = function() {
 };
 
 Game.prototype.checkColision = function() {
-
-  for (var i=1; i<this.auxBoard.shape.length; i++){
-    this.auxBoard.shape[i].forEach(function (e, j){
-      if(this.auxBoard.shape[i-1][j]*this.board.shape[i][j]!=0){
-        console.log("colision");
-        return [x,y];
-      }
-    }.bind(this));
-  };
-  return [];
-}
-  /*     var widthWithoutSpaces = this.piece.borderBottom.border.filter(function(e){return e!=-1}).length;
+  isCollision = function(){
+    for (var i=1; i<this.auxBoard.shape.length; i++){
+      this.auxBoard.shape[i].forEach(function (e, j){
+        if(this.auxBoard.shape[i-1][j]*this.board.shape[i][j]!=0){
+          console.log("colision");
+          return true;
+        }
+      }.bind(this));
+    };
+    return false;
+  }.bind(this);
+/*     var widthWithoutSpaces = this.piece.borderBottom.border.filter(function(e){return e!=-1}).length;
     console.log(this.board.skyLine);
     console.log(this.piece.borderBottom.border);
     var aux = 0;
@@ -111,4 +108,8 @@ Game.prototype.checkColision = function() {
     }.bind(this))
   }.bind(this)
    */
+  if (isCollision()){
+    this.piece.clearPiece();
+  } 
  
+};

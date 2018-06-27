@@ -140,7 +140,7 @@ Piece.prototype.draw = function() {
   );
 };
 //Clears the piece from the canvas and inserts its values on the board
-Piece.prototype.clearPiece = function() {
+Piece.prototype.clearPiece = function(position) {
   this.game.ctx.clearRect(
     this.x,
     this.y,
