@@ -63,10 +63,31 @@ Game.prototype.setListeners = function() {
 };
 
 Game.prototype.checkColision = function(e) {
-    if (this.piece.distanceFromBottom+this.piece.borderBottom.border[i] == this.board.skyLine[i+this.piece.distanceFromLeft]){
-      this.piece.clearPiece();
+  isCollision = function(){
+
+    for (var i=0; i<this.piece.shape.length; i++){
+      console.log(this.piece.distanceFromBottom+(this.piece.borderBottom.border[i]>0?this.piece.borderBottom.border[i]:0), this.board.skyLine[i+this.piece.distanceFromLeft - this.piece.borderBottom.border.filter(function(e){return e==-1}).length]);
+
+      if (this.piece.distanceFromBottom+(this.piece.borderBottom.border[i]>0?this.piece.borderBottom.border[i]:0) == this.board.skyLine[i+this.piece.distanceFromLeft - this.piece.borderBottom.border.filter(function(e){return e==-1}).length-1]){
+        return true;
+      }
     }
-  var i=0;
-  console.log(this.piece.shape.length)
-  console.log(this.piece.distanceFromBottom+this.piece.borderBottom.border[i], this.board.skyLine[i+this.piece.distanceFromLeft]);
-}
+    return false;
+  }.bind(this); 
+
+  if (isCollision()){
+    this.piece.clearPiece();
+  } 
+ 
+ 
+/*   console.log(this.piece.shape)
+  console.log(this.board.shape[this.piece.distanceFromBottom-this.piece.shape.length][this.piece.distanceFromLeft]);
+  
+  this.piece.shape.forEach(function(row, i){
+    row.forEach(function(e, j){
+      if ((this.board.shape[j+this.piece.distanceFromBottom-this.piece.shape.length][i+this.piece.distanceFromLeft]) !=0){
+        console.log("collision!!!!!!!!!");
+      }
+    }.bind(this));
+  }.bind(this)); */
+};
