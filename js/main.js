@@ -4,12 +4,9 @@ window.onload = function(){
     var audio = new Audio("resources/tetristheme.mp3");
 
     $(".btn").click(function (e){
-        $("#start").text("Pause");
-        $("#stop").text("Resume");
-        $("#start").toggleClass("btn-danger");
-        $("#start").toggleClass("btn-primary");
-        $("#start").attr("id", "stop");
-        $("#stop").attr("id", "start");
+        if(game.interval!=undefined){
+            clearInterval(game.interval);
+        }
         game.start();
         audio.play();
     });
@@ -18,14 +15,12 @@ window.onload = function(){
         audio.pause();
         $(".level").prop("disable", false);
         $("#classic").prop("disable", true);
-        console.log("classic");
         audio = new Audio("resources/tetristheme.mp3");
         audio.play();
         $("body").css({
             "background-image": "url(resources/tetris.jpg)",
             "background-repeat": "no-repeat",
             "background-size": "cover"});
-            
         $("label").css({color: "white"});
         //
     })
@@ -33,14 +28,12 @@ window.onload = function(){
         audio.pause();
         $(".level").prop("disable", false);
         $("#relaxed").prop("disable", true);
-        console.log("relaxed");
         audio = new Audio("resources/tetrisreggae.mp3");
         audio.play();
         $("body").css({
             "background-image": "url(resources/bigphotoformaspalomas.jpg)",
             "background-repeat": "no-repeat",
             "background-size": "cover"});
-            
         $("label").css({color: "white"});
         //
     });
@@ -48,15 +41,15 @@ window.onload = function(){
         audio.pause();
         $(".level").prop("disable", false);
         $("#exciting").prop("disable", true);
-        console.log("exciting");
         audio = new Audio("resources/tetrismetal.mp3");
         audio.play();
         $("body").css({
             "background-image": "url(resources/heavymetal.jpg)",
             "background-repeat": "no-repeat",
             "background-size": "cover"});
-            
         $("label").css({color: "white"});
     })
-
+    $("#again").click(function (e){
+        location.reload();
+    })
 };

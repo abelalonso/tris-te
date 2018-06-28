@@ -1,9 +1,10 @@
 label{
     font-size: 60px;
     font-family: 'Acme', sans-serif;
+    color: white;
 }
 body{
-    background-image: url(../resources/fondo.jpg);
+    background-image: url(../resources/portada.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;
@@ -14,18 +15,22 @@ body{
     justify-content: space-around;
 
     #triste{
-        border: 1px solid red;
+        border: 1px solid white;
         background: rgba(255, 255, 255, 0.5);
     }
+
     #data-container{
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        align-items: center;
         .game-data{
-            padding-left: 50px;
+            padding: 0 50px;
             justify-content: space-around;
             flex-direction: column;
             display: flex;
+            border: 1px solid black;
+            background: rgba(0, 0, 0, 0.2);
             .data{
                 display: flex;
                 flex-direction: column;
@@ -42,17 +47,21 @@ body{
                 }
             }
         }
-        #game-mode{
+        #buttons{
             display: flex;
-            flex-direction: column;
-            align-items: center;
-
-            button{
-                width: 200px;
-                margin: 10px 0;
-            }
-            button:disabled{
-                font-size: 1.5em;
+            justify-content: space-around;
+            border: 1px solid black;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            #game-mode{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 250px;
+                button{
+                    width: 200px;
+                    margin: 10px 0;
+                }
             }
         }
     }
