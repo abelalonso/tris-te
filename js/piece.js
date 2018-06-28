@@ -22,10 +22,11 @@ function Piece(game) {
   this.game = game;
   this.speed = this.game.speed;
   this.lateralMove = false;
-
+  
   //phisycal properties
   this.index = parseInt(Math.random() * shapes.length);
   this.shape = shapes[this.index];
+  this.color = this.colors[this.index+1];
   this.x = this.game.canvas.width / 2;
   this.y = 0;
   this.squareWidth = 35;

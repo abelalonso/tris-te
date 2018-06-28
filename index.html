@@ -22,9 +22,40 @@
 </head>
 
 <body>
-    <canvas id="triste" width="350px" height="700px"></canvas>
-    <label id="score">Score: 0</label>
-    <label id="level">Level: 1</label>
+    <div class="container">
+        <canvas id="triste" width="350px" height="700px"></canvas>
+        <div class="game-data">
+            <div id="next-piece">
+                <label>Next Piece</label>
+                <div class="row">
+                    <div class="little-square" id="0-0"></div>
+                    <div class="little-square" id="0-1"></div>
+                    <div class="little-square" id="0-2"></div>
+                    <div class="little-square" id="0-3"></div>
+                </div>
+                <div class="row">
+                    <div class="little-square" id="1-0"></div>
+                    <div class="little-square" id="1-1"></div>
+                    <div class="little-square" id="1-2"></div>
+                    <div class="little-square" id="1-3"></div>
+                </div>
+                <div class="row">
+                    <div class="little-square" id="2-0"></div>
+                    <div class="little-square" id="2-1"></div>
+                    <div class="little-square" id="2-2"></div>
+                    <div class="little-square" id="2-3"></div>
+                </div>
+                <div class="row">
+                    <div class="little-square" id="3-0"></div>
+                    <div class="little-square" id="3-1"></div>
+                    <div class="little-square" id="3-2"></div>
+                    <div class="little-square" id="3-3"></div>
+                </div>
+            </div>
+            <label id="score">Score: 0</label>
+            <label id="level">Level: 1</label>
+        </div>
+    </div>
     <button id="start" type="button" class="btn btn-primary">Start</button>
 </body>
 

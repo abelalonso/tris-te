@@ -38,9 +38,7 @@ Game.prototype.setListeners = function() {
 };
 //Resets the game
 Game.prototype.reset = function() {
-  this.piece = new Piece(this);
-  this.nextPiece = new Piece(this);
-  this.nextPiece.speed = 0;
+
   this.board = new Board(this);
   this.auxBoard = new Board(this);
 };
@@ -59,6 +57,10 @@ Game.prototype.clear = function() {
 };
 //start with setInterval
 Game.prototype.start = function() {
+  this.piece = new Piece(this);
+  this.nextPiece = new Piece(this);
+  this.nextPiece.speed = 0;
+  this.drawNextPiece();
   this.clear();
   this.interval = setInterval(
     function() {
@@ -67,12 +69,22 @@ Game.prototype.start = function() {
         this.draw();
         this.moveAll();
         if (this.checkCollision()) {
+
         }
-        console.log(this.nextPiece.shape);
       }
     }.bind(this),
     1000 / this.fps
   );
+};
+//Updates the game data
+Game.prototype.updateData = function() {
+  this.score += 100;
+  if (this.score % 1000 == 0) {
+    this.level++;
+    this.speed++;
+    $("#level").text("Level: " + this.level);
+  }
+  $("#score").text("Score: " + this.score);
 };
 //Check if the piece is going to occupate a fill position
 Game.prototype.checkCollision = function() {
@@ -84,7 +96,10 @@ Game.prototype.checkCollision = function() {
   ) {
     this.auxBoard.clearBoard();
     this.piece.clearPiece();
-    this.piece = new Piece(this);
+    this.piece = this.nextPiece;
+    this.piece.speed = this.speed;
+    this.nextPiece = new Piece(this);
+    this.drawNextPiece();
     return true;
   }
   //Regular case
@@ -97,6 +112,7 @@ Game.prototype.checkCollision = function() {
           this.piece = this.nextPiece;
           this.piece.speed = this.speed;
           this.nextPiece = new Piece(this);
+          this.drawNextPiece();
           return true;
         }
       }.bind(this)
@@ -104,13 +120,15 @@ Game.prototype.checkCollision = function() {
   }
   return false;
 };
-//Updates the game data
-Game.prototype.updateData = function() {
-  this.score += 100;
-  if (this.score % 1000 == 0) {
-    this.level++;
-    this.speed++;
-    $("#level").text("Level: " + this.level);
-  }
-  $("#score").text("Score: " + this.score);
-};
+
+Game.prototype.drawNextPiece = function(){
+  $(".little-square").css({background: "gray"});
+  this.nextPiece.shape.forEach(function(row, i){
+      row.forEach(function (e, j){
+          if (e!=0){
+            document.getElementById(i+"-"+j).style.background = this.nextPiece.color;
+          }
+      }.bind(this));
+  }.bind(this));
+
+}
