@@ -2,15 +2,20 @@ label{
     font-size: 60px;
     font-family: 'Acme', sans-serif;
 }
-
+body{
+    background-image: url(../resources/fondo.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+}
 .container{
-    margin-top: 50px;
+    padding-top: 50px;
     display: flex;
     justify-content: space-around;
 
     #triste{
         border: 1px solid red;
-        background: gray;
+        background: rgba(255, 255, 255, 0.5);
     }
     #data-container{
         display: flex;
