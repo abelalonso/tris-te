@@ -22,19 +22,25 @@ Game.prototype.setListeners = function() {
   document.onkeydown = function(e) {
     switch (e.keyCode) {
       case this.keyboard.up:
-        this.piece.rotate();
+        this.canMoveLeft = true;
+        this.canMoveRight = true;
+        this.lateralCollision(1);
+        this.lateralCollision(-1);
+        if (this.canMoveLeft && this.canMoveRight) {
+          this.piece.rotate();
+        }
         break;
       case this.keyboard.left:
         this.canMoveLeft = true;
         this.lateralCollision(1);
-        if(this.canMoveLeft){
+        if (this.canMoveLeft) {
           this.piece.moveLeft();
         }
         break;
       case this.keyboard.right:
         this.canMoveRight = true;
         this.lateralCollision(-1);
-        if(this.canMoveRight){
+        if (this.canMoveRight) {
           this.piece.moveRight();
         }
         break;
@@ -46,7 +52,6 @@ Game.prototype.setListeners = function() {
 };
 //Resets the game
 Game.prototype.reset = function() {
-
   this.board = new Board(this);
   this.auxBoard = new Board(this);
 };
@@ -128,13 +133,19 @@ Game.prototype.checkCollision = function() {
   return false;
 };
 
-Game.prototype.lateralCollision = function(direction){ //direction = -1 left
+Game.prototype.lateralCollision = function(direction) {
+  //direction = -1 left
   for (var i = 1; i < this.auxBoard.shape.length; i++) {
     this.auxBoard.shape[i].forEach(
       function(e, j) {
-        if ((j>0) && (j<this.board.shape[0].length-1) && (this.auxBoard.shape[i][j+1*direction] * this.board.shape[i][j] != 0)) {
-          if(direction ==1){
-          this.canMoveLeft = false;
+        if (
+          j > 0 &&
+          j < this.board.shape[0].length - 1 &&
+          this.auxBoard.shape[i][j + 1 * direction] * this.board.shape[i][j] !=
+            0
+        ) {
+          if (direction == 1) {
+            this.canMoveLeft = false;
           } else {
             this.canMoveRight = false;
           }
@@ -144,16 +155,21 @@ Game.prototype.lateralCollision = function(direction){ //direction = -1 left
     );
   }
   return false;
-}
+};
 //Draws the next piece on the DOM
-Game.prototype.drawNextPiece = function(){
-  $(".little-square").css({background: "gray"});
-  this.nextPiece.shape.forEach(function(row, i){
-      row.forEach(function (e, j){
-          if (e!=0){
-            document.getElementById(i+"-"+j).style.background = this.nextPiece.color;
+Game.prototype.drawNextPiece = function() {
+  $(".little-square").css({ background: "gray" });
+  this.nextPiece.shape.forEach(
+    function(row, i) {
+      row.forEach(
+        function(e, j) {
+          if (e != 0) {
+            document.getElementById(
+              i + "-" + j
+            ).style.background = this.nextPiece.color;
           }
-      }.bind(this));
-  }.bind(this));
-
-}
+        }.bind(this)
+      );
+    }.bind(this)
+  );
+};
