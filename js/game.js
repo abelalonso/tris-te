@@ -158,7 +158,7 @@ Game.prototype.lateralCollision = function(direction) {
 };
 //Draws the next piece on the DOM
 Game.prototype.drawNextPiece = function() {
-  $(".little-square").css({ background: "gray" });
+  $(".little-square").css({ background: "rgba(0,0,0,0)"});
   this.nextPiece.shape.forEach(
     function(row, i) {
       row.forEach(

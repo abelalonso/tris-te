@@ -19,12 +19,18 @@
         <script type="text/javascript" src="js/game.js"></script>
         <script type="text/javascript" src="js/main.js"></script>
     <title>Triste</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
 </head>
 
 <body>
     <div class="container">
         <canvas id="triste" width="350px" height="700px"></canvas>
         <div class="game-data">
+            <div class="data">
+                <label id="score">Score: 0</label>
+                <label id="level">Level: 1</label>
+            </div>
             <div id="next-piece">
                 <label>Next Piece</label>
                 <div class="row">
@@ -52,8 +58,6 @@
                     <div class="little-square" id="3-3"></div>
                 </div>
             </div>
-            <label id="score">Score: 0</label>
-            <label id="level">Level: 1</label>
         </div>
     </div>
     <button id="start" type="button" class="btn btn-primary">Start</button>

@@ -1,5 +1,6 @@
 #triste{
     border: 1px solid red;
+    background: gray;
 }
 
 #nextPiece{
@@ -8,6 +9,7 @@
 
 .row{
     margin: 0 50px;
+    width: 160px;
 }
 
 .container{
@@ -16,10 +18,18 @@
 
 .game-data{
     padding-left: 50px;
+    justify-content: space-around;
+    flex-direction: column;
+    display: flex;
 }
 
 .little-square{
-    width: 20px;
-    height: 20px;
-    background: gray;
+    width: 40px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0);
+}
+
+label{
+    font-size: 60px;
+    font-family: 'Acme', sans-serif;
 }
