@@ -42,6 +42,7 @@ Board.prototype.clearBoard = function() {
   );
   return matrix;
 };
+
 //Inserts the values of a piece in the board
 Board.prototype.insertPiece = function(piece, x, y) {
   y = this.shape.length - y - piece.shape.length + piece.borderBottom.min;

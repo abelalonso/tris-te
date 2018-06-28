@@ -25,10 +25,18 @@ Game.prototype.setListeners = function() {
         this.piece.rotate();
         break;
       case this.keyboard.left:
-        this.piece.moveLeft();
+        this.canMoveLeft = true;
+        this.lateralCollision(1);
+        if(this.canMoveLeft){
+          this.piece.moveLeft();
+        }
         break;
       case this.keyboard.right:
-        this.piece.moveRight();
+        this.canMoveRight = true;
+        this.lateralCollision(-1);
+        if(this.canMoveRight){
+          this.piece.moveRight();
+        }
         break;
       case this.keyboard.down:
         this.piece.speed = 25;
@@ -69,7 +77,6 @@ Game.prototype.start = function() {
         this.draw();
         this.moveAll();
         if (this.checkCollision()) {
-
         }
       }
     }.bind(this),
@@ -121,6 +128,24 @@ Game.prototype.checkCollision = function() {
   return false;
 };
 
+Game.prototype.lateralCollision = function(direction){ //direction = -1 left
+  for (var i = 1; i < this.auxBoard.shape.length; i++) {
+    this.auxBoard.shape[i].forEach(
+      function(e, j) {
+        if ((j>0) && (j<this.board.shape[0].length-1) && (this.auxBoard.shape[i][j+1*direction] * this.board.shape[i][j] != 0)) {
+          if(direction ==1){
+          this.canMoveLeft = false;
+          } else {
+            this.canMoveRight = false;
+          }
+          return true;
+        }
+      }.bind(this)
+    );
+  }
+  return false;
+}
+//Draws the next piece on the DOM
 Game.prototype.drawNextPiece = function(){
   $(".little-square").css({background: "gray"});
   this.nextPiece.shape.forEach(function(row, i){
