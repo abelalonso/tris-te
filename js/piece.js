@@ -61,7 +61,6 @@ Piece.prototype.calculateBorders = function() {
   }
   matrix = this.shape;
   this.borderLeft = new borderObj(matrix);
-
   // border Top
   matrix = this.transformMatrix(matrix);
   this.borderBottom = new borderObj(matrix);
@@ -175,16 +174,19 @@ Piece.prototype.moveDown = function() {
     this.game.canvas.height
   ) {
     this.y += 0.5;
-    if ((this.y % this.squareWidth == 0)) {
+    if (this.y % this.squareWidth == 0) {
       --this.distanceFromBottom;
     }
     this.game.auxBoard.clearBoard();
-    this.game.auxBoard.insertPiece(this, this.distanceFromLeft, this.distanceFromBottom);
+    this.game.auxBoard.insertPiece(
+      this,
+      this.distanceFromLeft,
+      this.distanceFromBottom
+    );
   } else {
     this.clearPiece();
   }
 };
-
 //Clears the piece from the canvas and inserts its values on the board
 Piece.prototype.clearPiece = function() {
   this.game.ctx.clearRect(
@@ -196,7 +198,7 @@ Piece.prototype.clearPiece = function() {
   this.game.board.insertPiece(
     this,
     this.distanceFromLeft,
-    this.distanceFromBottom 
+    this.distanceFromBottom
   );
   this.game.board.draw();
 };
