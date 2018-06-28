@@ -14,10 +14,10 @@
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
         crossorigin="anonymous"></script>
-        <script type="text/javascript" src="js/piece.js"></script>
-        <script type="text/javascript" src="js/board.js"></script>
-        <script type="text/javascript" src="js/game.js"></script>
-        <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/piece.js"></script>
+    <script type="text/javascript" src="js/board.js"></script>
+    <script type="text/javascript" src="js/game.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
     <title>Triste</title>
 
     <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
@@ -26,41 +26,48 @@
 <body>
     <div class="container">
         <canvas id="triste" width="350px" height="700px"></canvas>
-        <div class="game-data">
-            <div class="data">
-                <label id="score">Score: 0</label>
-                <label id="level">Level: 1</label>
+        <div id="data-container">   
+            <div class="game-data">
+                <div class="data">
+                    <label id="score">Score: 0</label>
+                    <label id="level">Level: 1</label>
+                </div>
+                <div id="next-piece">
+                    <label>Next Piece</label>
+                    <div class="row">
+                        <div class="little-square" id="0-0"></div>
+                        <div class="little-square" id="0-1"></div>
+                        <div class="little-square" id="0-2"></div>
+                        <div class="little-square" id="0-3"></div>
+                    </div>
+                    <div class="row">
+                        <div class="little-square" id="1-0"></div>
+                        <div class="little-square" id="1-1"></div>
+                        <div class="little-square" id="1-2"></div>
+                        <div class="little-square" id="1-3"></div>
+                    </div>
+                    <div class="row">
+                        <div class="little-square" id="2-0"></div>
+                        <div class="little-square" id="2-1"></div>
+                        <div class="little-square" id="2-2"></div>
+                        <div class="little-square" id="2-3"></div>
+                    </div>
+                    <div class="row">
+                        <div class="little-square" id="3-0"></div>
+                        <div class="little-square" id="3-1"></div>
+                        <div class="little-square" id="3-2"></div>
+                        <div class="little-square" id="3-3"></div>
+                    </div>
+                </div>
             </div>
-            <div id="next-piece">
-                <label>Next Piece</label>
-                <div class="row">
-                    <div class="little-square" id="0-0"></div>
-                    <div class="little-square" id="0-1"></div>
-                    <div class="little-square" id="0-2"></div>
-                    <div class="little-square" id="0-3"></div>
-                </div>
-                <div class="row">
-                    <div class="little-square" id="1-0"></div>
-                    <div class="little-square" id="1-1"></div>
-                    <div class="little-square" id="1-2"></div>
-                    <div class="little-square" id="1-3"></div>
-                </div>
-                <div class="row">
-                    <div class="little-square" id="2-0"></div>
-                    <div class="little-square" id="2-1"></div>
-                    <div class="little-square" id="2-2"></div>
-                    <div class="little-square" id="2-3"></div>
-                </div>
-                <div class="row">
-                    <div class="little-square" id="3-0"></div>
-                    <div class="little-square" id="3-1"></div>
-                    <div class="little-square" id="3-2"></div>
-                    <div class="little-square" id="3-3"></div>
-                </div>
+            <div id="game-mode">
+                <button type="button" class="btn btn-danger level" id="exciting" >Exciting</button>
+                <button type="button" class="btn btn-warning level" id="classic" >Classic</button>
+                <button type="button" class="btn btn-success level" id="relaxed" >Relaxed</button>
+                <button type="button" class="btn btn-primary" id="start" >Start</button>
             </div>
         </div>
     </div>
-    <button id="start" type="button" class="btn btn-primary">Start</button>
 </body>
 
 </html>

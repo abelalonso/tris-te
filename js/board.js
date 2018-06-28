@@ -75,6 +75,8 @@ Board.prototype.clearLine = function() {
   for (var i = matrixAux.length; i < 20; i++) {
     matrixAux.unshift([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
     this.game.updateData();
+    var audio = new Audio('resources/linea.mp3');
+    audio.play();
   }
   this.shape = matrixAux;
 };

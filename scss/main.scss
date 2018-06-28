@@ -1,35 +1,59 @@
-#triste{
-    border: 1px solid red;
-    background: gray;
-}
-
-#nextPiece{
-    display: flex;
-}
-
-.row{
-    margin: 0 50px;
-    width: 160px;
-}
-
-.container{
-    display: flex;
-}
-
-.game-data{
-    padding-left: 50px;
-    justify-content: space-around;
-    flex-direction: column;
-    display: flex;
-}
-
-.little-square{
-    width: 40px;
-    height: 40px;
-    background: rgba(0, 0, 0, 0);
-}
-
 label{
     font-size: 60px;
     font-family: 'Acme', sans-serif;
 }
+
+.container{
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-around;
+
+    #triste{
+        border: 1px solid red;
+        background: gray;
+    }
+    #data-container{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .game-data{
+            padding-left: 50px;
+            justify-content: space-around;
+            flex-direction: column;
+            display: flex;
+            .data{
+                display: flex;
+                flex-direction: column;
+            }
+            #next-piece{
+                .row{
+                    margin: 0 50px;
+                    width: 160px;
+                }
+                .little-square{
+                    width: 40px;
+                    height: 40px;
+
+                }
+            }
+        }
+        #game-mode{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            button{
+                width: 200px;
+                margin: 10px 0;
+            }
+            button:disabled{
+                font-size: 1.5em;
+            }
+        }
+    }
+}
+
+
+
+
+
