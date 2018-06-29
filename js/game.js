@@ -92,7 +92,7 @@ Game.prototype.start = function() {
 Game.prototype.updateData = function() {
   this.score += 100;
   if (this.score % 1000 == 0) {
-    var audio = new Audio('resources/yeah.mp3');
+    var audio = new Audio("resources/yeah.mp3");
     audio.play();
     this.level++;
     this.speed++;
@@ -121,6 +121,9 @@ Game.prototype.checkCollision = function() {
     this.auxBoard.shape[i].forEach(
       function(e, j) {
         if (this.auxBoard.shape[i - 1][j] * this.board.shape[i][j] != 0) {
+          if (this.piece.distanceFromBottom == 18) {
+            this.gameOver();
+          }
           this.auxBoard.clearBoard();
           this.piece.clearPiece();
           this.piece = this.nextPiece;
@@ -133,6 +136,26 @@ Game.prototype.checkCollision = function() {
     );
   }
   return false;
+};
+
+Game.prototype.gameOver = function() {
+  clearInterval(this.interval);
+  var audio = new Audio("resources/error.mp3");
+  audio.play();
+  $(".btn").prop("disabled", true);
+  $("#again").prop("disabled", false);
+  this.audio.pause();
+  var timeoutId = setTimeout(function() {
+    var audio = new Audio("resources/gameover.mp3");
+    $("#play-msg")
+      .text("GAME OVER")
+      .css({
+        "font-size": "7.5em",
+        top: "20%"
+      });
+    $("#play-msg").fadeIn(500);
+    audio.play();
+  }, 1000);
 };
 
 Game.prototype.lateralCollision = function(direction) {
@@ -160,8 +183,8 @@ Game.prototype.lateralCollision = function(direction) {
 };
 //Draws the next piece on the DOM
 Game.prototype.drawNextPiece = function() {
-  $(".little-square").css({ background: "rgba(0,0,0,0)"});
-  $(".little-square").css({ border: "none"});
+  $(".little-square").css({ background: "rgba(0,0,0,0)" });
+  $(".little-square").css({ border: "none" });
   this.nextPiece.shape.forEach(
     function(row, i) {
       row.forEach(
@@ -170,9 +193,8 @@ Game.prototype.drawNextPiece = function() {
             document.getElementById(
               i + "-" + j
             ).style.background = this.nextPiece.color;
-            document.getElementById(
-              i + "-" + j
-            ).style.border = "1px solid rgba(255, 255, 255, 0.5)";
+            document.getElementById(i + "-" + j).style.border =
+              "1px solid rgba(255, 255, 255, 0.5)";
           }
         }.bind(this)
       );
