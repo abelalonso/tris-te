@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ![Ironhack logo](https://i.imgur.com/1QgrNNw.png)
 [Prueba el tris-te](https://abelalonso.github.io/tris-te/)
 
