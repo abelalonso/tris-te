@@ -12,6 +12,7 @@ h1{
     animation-delay: 5s;
     opacity: 0;
     animation-fill-mode: forwards;
+    font-size: 6em;
 }
 
 #primero{
@@ -22,6 +23,7 @@ h1{
     animation-delay: 10s;
     opacity: 0;
     animation-fill-mode: forwards;
+    font-size: 4em;
 }
 
 #segundo{
@@ -32,7 +34,7 @@ h1{
     animation-delay: 15s;
     animation-fill-mode: forwards;
     opacity: 0;
-
+    font-size: 4em;
 }
 
 @keyframes show{

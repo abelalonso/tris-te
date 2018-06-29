@@ -92,6 +92,8 @@ Game.prototype.start = function() {
 Game.prototype.updateData = function() {
   this.score += 100;
   if (this.score % 1000 == 0) {
+    $("#play-msg").text("Line up!!!<br>Level up!!!");
+    $("#play-msg").fadeIn(1000).delay(1000).fadeOut(2000);
     this.level++;
     this.speed++;
     $("#level").text("Level: " + this.level);
@@ -167,6 +169,9 @@ Game.prototype.drawNextPiece = function() {
             document.getElementById(
               i + "-" + j
             ).style.background = this.nextPiece.color;
+            document.getElementById(
+              i + "-" + j
+            ).style.border = "1px solid rgba(255, 255, 255, 0.5)";
           }
         }.bind(this)
       );

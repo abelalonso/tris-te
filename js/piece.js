@@ -145,8 +145,10 @@ Piece.prototype.draw = function() {
 //Draws the little square
 Piece.prototype.drawSquare = function(x, y, width, height, colorIndex) {
   this.game.ctx.save();
+  this.game.ctx.strokeStyle = "rgba(255, 255, 255, 0.5)"
+  this.game.ctx.strokeRect(x, y, width, height);
   this.game.ctx.fillStyle = this.colors[colorIndex];
-  this.game.ctx.fillRect(x, y, width, height);
+  this.game.ctx.fillRect(x+1, y+1, width-2, height-2);
   this.game.ctx.restore();
 };
 //Moves the piece to the left
