@@ -5,7 +5,7 @@
 =======
 
 ## Idea
-Tris-te parte de la idea de coger el concepto del mítico juego ruso "TETRIS", partirlo y darle la vuelta....TRIS-TE... Vale... probablemente no sea el mejor nombre comercial de la historia... pero es divertido...
+Tris-te parte de la idea de coger el concepto del mítico juego "TETRIS", partirlo y darle la vuelta....TRIS-TE... Vale... probablemente no sea el mejor nombre comercial de la historia... pero es divertido...
 
 ## Tetris original
 
