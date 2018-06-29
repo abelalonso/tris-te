@@ -92,8 +92,8 @@ Game.prototype.start = function() {
 Game.prototype.updateData = function() {
   this.score += 100;
   if (this.score % 1000 == 0) {
-    $("#play-msg").text("Line up!!!<br>Level up!!!");
-    $("#play-msg").fadeIn(1000).delay(1000).fadeOut(2000);
+    var audio = new Audio('resources/yeah.mp3');
+    audio.play();
     this.level++;
     this.speed++;
     $("#level").text("Level: " + this.level);
@@ -161,6 +161,7 @@ Game.prototype.lateralCollision = function(direction) {
 //Draws the next piece on the DOM
 Game.prototype.drawNextPiece = function() {
   $(".little-square").css({ background: "rgba(0,0,0,0)"});
+  $(".little-square").css({ border: "none"});
   this.nextPiece.shape.forEach(
     function(row, i) {
       row.forEach(

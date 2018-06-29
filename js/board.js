@@ -75,10 +75,16 @@ Board.prototype.clearLine = function() {
   for (var i = matrixAux.length; i < 20; i++) {
     matrixAux.unshift([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
     this.game.updateData();
-    var audio = new Audio('resources/linea.mp3');
-    $("#play-msg").text("Line up!!!");
-    $("#play-msg").fadeIn(1000).delay(1000).fadeOut(2000);
-    audio.play();
+    if(this.game.score % 1000 == 0){
+      console.log("level up")
+      $("#play-msg").text("Level up!!!");
+      $("#play-msg").fadeIn(500).delay(500).fadeOut(1000);
+    }else{
+      var audio = new Audio('resources/linea.mp3');
+      $("#play-msg").text("Line up!!!");
+      $("#play-msg").fadeIn(500).delay(500).fadeOut(1000);
+      audio.play();
+    }
   }
   this.shape = matrixAux;
 };

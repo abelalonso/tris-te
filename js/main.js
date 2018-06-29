@@ -16,6 +16,8 @@ window.onload = function(){
         $(".level").prop("disable", false);
         $("#classic").prop("disable", true);
         audio = new Audio("resources/tetristheme.mp3");
+        audio.loop = true;
+        audio.volume = 0.3;
         audio.play();
         $("body").css({
             "background-image": "url(resources/tetris.jpg)",
@@ -29,6 +31,8 @@ window.onload = function(){
         $(".level").prop("disable", false);
         $("#relaxed").prop("disable", true);
         audio = new Audio("resources/tetrisreggae.mp3");
+        audio.loop = true;
+        audio.volume = 0.3;
         audio.play();
         $("body").css({
             "background-image": "url(resources/bigphotoformaspalomas.jpg)",
@@ -42,6 +46,8 @@ window.onload = function(){
         $(".level").prop("disable", false);
         $("#exciting").prop("disable", true);
         audio = new Audio("resources/tetrismetal.mp3");
+        audio.loop = true;
+        audio.volume = 0.3;
         audio.play();
         $("body").css({
             "background-image": "url(resources/heavymetal.jpg)",
