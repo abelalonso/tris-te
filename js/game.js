@@ -5,6 +5,7 @@ function Game(canvasID) {
   this.speed = 1;
   this.score = 0;
   this.level = 1;
+  this.mode = 0;
 
   this.reset();
   this.setListeners();

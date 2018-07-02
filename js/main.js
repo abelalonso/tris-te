@@ -12,6 +12,7 @@ window.onload = function(){
     
     $("#classic").click(function (e){
         game.audio.pause();
+        game.mode=1;
         $(".level").prop("disable", false);
         $("#classic").prop("disable", true);
         game.audio = new Audio("resources/tetristheme.mp3");
@@ -27,6 +28,7 @@ window.onload = function(){
     })
     $("#relaxed").click(function (e){
         game.audio.pause();
+        game.mode=0;
         $(".level").prop("disable", false);
         $("#relaxed").prop("disable", true);
         game.audio = new Audio("resources/tetrisreggae.mp3");
@@ -42,6 +44,7 @@ window.onload = function(){
     });
     $("#exciting").click(function (e){
         game.audio.pause();
+        game.mode=2;
         $(".level").prop("disable", false);
         $("#exciting").prop("disable", true);
         game.audio = new Audio("resources/tetrismetal.mp3");
